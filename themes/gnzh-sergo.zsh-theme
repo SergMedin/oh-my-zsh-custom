@@ -38,7 +38,7 @@ if [[ -n "$SSH_CLIENT" || -n "$SSH2_CLIENT" || $UID -eq 0 ]]; then
   user_host='%F{red}%n@%m%f '
 fi
 
-# Build PROMPT
-PROMPT="╭─${clock} ${user_host}${current_dir} ${venv_prompt}${git_branch}
+# Build PROMPT (добавляем пустую строку перед каждым приглашением)
+PROMPT=$'\n'"╭─${clock} ${user_host}${current_dir} ${venv_prompt}${git_branch}
 ╰─%(!.%F{red}.%f)➤%f "
 RPROMPT="${return_code}"
