@@ -6,37 +6,37 @@ ZSHRC="$HOME/.zshrc"
 CUSTOM_LINE='export ZSH_CUSTOM="$HOME/.oh-my-zsh-custom"'
 PATTERN='source $ZSH/oh-my-zsh.sh'
 
-echo "=== Настройка ZSH_CUSTOM для Oh My Zsh ==="
-echo "Файл конфигурации: $ZSHRC"
+echo "=== Set ZSH_CUSTOM for Oh My Zsh ==="
+echo "Config file: $ZSHRC"
 echo
 
 if [[ ! -f "$ZSHRC" ]]; then
-  echo "❌ Файл $ZSHRC не найден."
-  echo "   Создай его или запусти Oh My Zsh установщик, а потом повтори скрипт."
+  echo "❌ File $ZSHRC not found."
+  echo "   Make it or run Oh My Zsh install, then run this script again."
   exit 1
 fi
 
 if [[ ! -w "$ZSHRC" ]]; then
-  echo "❌ Нет прав на запись в $ZSHRC."
-  echo "   Запусти скрипт из-под пользователя, который может менять этот файл,"
-  echo "   или поправь права/владельца и попробуй снова."
+  echo "❌ No write access to $ZSHRC."
+  echo "   Run this script as a user who can edit this file,"
+  echo "   or fix file permissions and try again."
   exit 1
 fi
 
-echo "1. Проверяю, есть ли уже строка с ZSH_CUSTOM..."
+echo "1. Check if line with ZSH_CUSTOM exists..."
 if grep -qF "$CUSTOM_LINE" "$ZSHRC"; then
-  echo "✅ Строка уже есть в .zshrc:"
+  echo "✅ Line is already in .zshrc:"
   echo "   $CUSTOM_LINE"
   echo
-  echo "Ничего менять не нужно."
+  echo "No change needed."
 else
-  echo "⏳ Строки нет, нужно добавить."
+  echo "⏳ No line found, need to add."
   echo
 
   if grep -qF "$PATTERN" "$ZSHRC"; then
-    echo "2. Нашёл строку запуска Oh My Zsh:"
+    echo "2. Found line that starts Oh My Zsh:"
     echo "   $PATTERN"
-    echo "   Вставляю ZSH_CUSTOM прямо перед этой строкой..."
+    echo "   Add ZSH_CUSTOM right before this line..."
     echo
 
     # удаляем старые экспорт-линии, вставляем новую перед точным совпадением
@@ -49,7 +49,7 @@ else
     ' "$ZSHRC" >"$tmpfile"
 
     if [[ $? -eq 2 ]]; then
-      echo "❌ Не нашёл точную строку запуска Oh My Zsh, ничего не менял."
+      echo "❌ Did not find exact Oh My Zsh line, nothing changed."
       rm -f "$tmpfile"
       exit 1
     fi
@@ -58,20 +58,20 @@ else
     mv "$tmpfile" "$ZSHRC"
 
     if grep -q 'ZSH_CUSTOM=' "$ZSHRC"; then
-      echo "✅ Готово. В $ZSHRC добавлена строка:"
+      echo "✅ Done. Added line into $ZSHRC:"
       echo "   $CUSTOM_LINE"
     else
-      echo "❌ Не получилось вставить строку."
-      echo "   Проверь права на файл $ZSHRC и попробуй ещё раз."
+      echo "❌ Could not insert line."
+      echo "   Check rights on $ZSHRC and try again."
       exit 1
     fi
   else
-    echo "⚠️ Внимание:"
-    echo "   В $ZSHRC не нашёл строку:"
+    echo "⚠️ Warning:"
+    echo "   In $ZSHRC did not find line:"
     echo "   $PATTERN"
     echo
-    echo "Скрипт не стал ничего менять, чтобы не сломать конфиг."
-    echo "Добавь вручную примерно так:"
+    echo "Script did not change file to keep config safe."
+    echo "Add by hand like this:"
     echo
     echo "   $CUSTOM_LINE"
     echo "   source $ZSH/oh-my-zsh.sh"
@@ -81,10 +81,10 @@ else
 fi
 
 echo
-echo "3. Проверка: строки с ZSH_CUSTOM в $ZSHRC:"
-grep -n 'ZSH_CUSTOM' "$ZSHRC" || echo "   (ни одной строки с ZSH_CUSTOM не найдено)"
+echo "3. Check: lines with ZSH_CUSTOM in $ZSHRC:"
+grep -n 'ZSH_CUSTOM' "$ZSHRC" || echo "   (no lines with ZSH_CUSTOM found)"
 
 echo
-echo "Все. Теперь перезапусти терминал или выполни:"
+echo "Done. Now restart terminal or run:"
 echo "   source \"$ZSHRC\""
-echo "чтобы новые настройки подхватились."
+echo "to load new settings."
