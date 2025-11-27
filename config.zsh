@@ -2,8 +2,12 @@
 if [[ -z ${OMZ_CUSTOM_PRE_LOADED:-} ]]; then
   typeset -g OMZ_CUSTOM_PRE_LOADED=1
 
+  # включаем async-обработчик git-подсказки из omz/lib/git.zsh
+  zstyle ':omz:alpha:lib:git' async-prompt true
+
   # плагины и авто-venv
-  plugins=(git python virtualenv)
+  typeset -gaU plugins
+  plugins+=(git python virtualenv)
   export PYTHON_AUTO_VRUN=true
   export PYTHON_VENV_NAMES=(.venv venv)
   export VIRTUAL_ENV_DISABLE_PROMPT=1
@@ -15,12 +19,12 @@ if [[ -z ${OMZ_CUSTOM_PRE_LOADED:-} ]]; then
     unset VIRTUAL_ENV
   fi
 
-  # подгружаем нужные плагины вручную (plugins=(git) в ~/.zshrc их не загрузит)
-  autoload -Uz add-zsh-hook
-  (( $+functions[auto_vrun] )) && add-zsh-hook -d chpwd auto_vrun 2>/dev/null
-  
-  source "$ZSH/plugins/python/python.plugin.zsh"
-  source "$ZSH/plugins/virtualenv/virtualenv.plugin.zsh"
+  # Если config.zsh загрузился ПОСЛЕ oh-my-zsh.sh и python/virtualenv не подхватились,
+  # догружаем их вручную через omz, но только если auto_vrun ещё не определён
+  if (( ! $+functions[auto_vrun] )) && (( $+functions[omz] )); then
+    omz plugin load python virtualenv
+  fi
+
 fi
 
 # тема (нужно и при втором проходе, перед загрузкой темы OMZ)
