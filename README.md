@@ -5,14 +5,13 @@ Simple personal setup for Oh My Zsh. Theme `gnzh-sergo`, file `config.zsh`, and 
 ## Quick install
 1) Clone to the custom folder of Oh My Zsh:
 ```bash
-ZSH_CUSTOM="$HOME/.oh-my-zsh-custom"
-mkdir -p "$ZSH_CUSTOM"
-cd "$ZSH_CUSTOM"
-git clone <YOUR_REPO_URL> .
+mkdir -p ~/.oh-my-zsh-custom
+cd ~/.oh-my-zsh-custom
+git clone https://github.com/SergMedin/oh-my-zsh-custom.git .
 ```
 2) Add config and theme in `~/.zshrc` (put lines near `source $ZSH/oh-my-zsh.sh`):
 ```bash
-export ZSH_CUSTOM="$ZSH_CUSTOM"
+export ZSH_CUSTOM=~/.oh-my-zsh-custom
 source $ZSH/custom/config.zsh
 ```
 3) Restart shell: `exec zsh` or `source ~/.zshrc`.
