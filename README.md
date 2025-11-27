@@ -20,8 +20,3 @@ source $ZSH/custom/config.zsh
 ## What is inside
 - `config.zsh` — plugins, small helpers, auto start venv.
 - `themes/gnzh-sergo.zsh-theme` — time, path, venv name, git info, return code.
-- `plugins/` — extra plugins (example only).
-
-## Need to have
-- Oh My Zsh in `~/.oh-my-zsh`.
-- Git to clone.
